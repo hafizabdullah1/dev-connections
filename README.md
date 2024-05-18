@@ -47,13 +47,9 @@ Developer Connect is a platform where developers can connect with each other, sh
 
    Visit `http://localhost:3000` in your browser to access the Developer Connect application.
 
-## Screenshots
-
-_Add screenshots of your application here._
-
 ## Demo
 
-_Add a link to the live demo of your application here._
+[Dev Connections](https://dev-connections.vercel.app)
 
 ## Contributing
 
