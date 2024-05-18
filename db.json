@@ -1,0 +1,112 @@
+{
+  "devUsers": [
+    {
+      "name": "developer",
+      "email": "hello@gmail.com",
+      "img": "https://github.com/hafizabdullah1.png",
+      "git": "hafizabdullah1",
+      "password": "1234",
+      "confirm": "1234",
+      "id": 1,
+      "profile": {
+        "status": "Senior Developer",
+        "website": "hafizabdullah.site",
+        "location": "Lahore, Pakistan ",
+        "company": "Digital Vortax",
+        "skills": "Html,Css,JavaScript,J-query,React.js,Bootstrap,React-bootstrap,Tailwind,Materiul-ui,NodeJs,ExpressJs,MongoDB,Git,Github",
+        "git": "hafizabdullah1",
+        "bio": "I'm a passionate developer who loves building things for the web.\n\n⚡ Fun fact: I enjoy experimenting with code and exploring new programming techniques in my spare time!\n\nLet's connect and build awesome things together! 😊"
+      }
+    },
+    {
+      "name": "hafzabdullah@gmail.com",
+      "email": "habdullah4510@gmail.com",
+      "img": "https://t3.ftcdn.net/jpg/06/01/17/18/360_F_601171862_l7yZ0wujj8o2SowiKTUsfLEEx8KunYNd.jpg",
+      "git": "hafizabdullah1",
+      "password": "12345",
+      "confirm": "12345",
+      "id": 2,
+      "profile": {
+        "status": "Developer",
+        "website": "https://hafizabdullah.site",
+        "location": "Lahore",
+        "company": "vvork cloud technologies",
+        "skills": "Html,Css,JavaScript,J-query,Reactjs,Bootstrap,React-bootstrap,Tailwind,Materiul-ui,Nodejs,Expressjs,MongoDB",
+        "git": "hafizabdullah1",
+        "bio": "i am web developer"
+      }
+    },
+    {
+      "name": "Hafiz Abdullah",
+      "email": "habdullah@gmail.com",
+      "img": "https://github.com/hafizabdullah1.png",
+      "git": "hafizabdullah1",
+      "password": "12345",
+      "confirm": "12345",
+      "id": 3,
+      "profile": {
+        "status": "Senior Developer",
+        "company": "Creesoft",
+        "website": "https://hafizabdullah.site",
+        "location": "Lahore",
+        "skills": "Html,Css,JavaScript,J-query,React.js,Bootstrap,React-bootstrap,Tailwind,Materiul-ui,NodeJs,ExpressJs,MongoDB,Git,Github",
+        "gitUser": "hafizabdullah1",
+        "bio": "i am senior mern stack developer"
+      }
+    }
+  ],
+  "devPosts": [
+    {
+      "comment": "hi",
+      "like": [
+        2
+      ],
+      "date": "2024-05-17",
+      "time": "20:45:24",
+      "username": "hello",
+      "img": "https://github.com/hafizabdullah1.png",
+      "Uid": 1,
+      "id": 1,
+      "dislike": []
+    },
+    {
+      "comment": "hi my name is hacker",
+      "date": "2024-05-18",
+      "time": "00:39:23",
+      "username": "hafzabdullah@gmail.com",
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR14Q8v555WtVlPnDG4cHDfPkAEN4r87mBAxQ&s",
+      "Uid": 2,
+      "id": 2,
+      "like": [],
+      "dislike": [
+        2
+      ]
+    }
+  ],
+  "postReplies": [
+    {
+      "id": 1,
+      "postId": 1,
+      "username": "User2",
+      "comment": "This is a reply",
+      "date": "2023-05-18",
+      "time": "13:00:00"
+    },
+    {
+      "postId": "1",
+      "username": "hafzabdullah@gmail.com",
+      "comment": "bye",
+      "date": "2024-05-18",
+      "time": "19:39:29",
+      "id": 2
+    },
+    {
+      "postId": "1",
+      "username": "hafzabdullah@gmail.com",
+      "comment": "thyh",
+      "date": "2024-05-18",
+      "time": "19:41:06",
+      "id": 3
+    }
+  ]
+}
