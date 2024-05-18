@@ -21,13 +21,13 @@ Developer Connect is a platform where developers can connect with each other, sh
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/hafizabdullah1/dev-connection.git
+   git clone https://github.com/hafizabdullah1/dev-connections.git
    ```
 
 2. **Install Dependencies**:
 
    ```bash
-   cd ev-connection
+   cd dev-connections
    npm install
    ```
 
