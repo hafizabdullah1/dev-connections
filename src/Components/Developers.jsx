@@ -18,7 +18,6 @@ function Developers() {
 
   const { loading, data, failed } = useSelector((state) => state?.storeData)
   const currentUser = JSON.parse(localStorage.getItem('user'));
-
   const otherUsers = data && data.length > 0 ? data.filter(user => user.id !== currentUser?.id) : [];
   const currentUserProfile = data && data.length > 0 ? data.find(user => user.id === currentUser?.id) : null;
 
@@ -34,7 +33,7 @@ function Developers() {
         </h2>
 
         {/* Current User Profile */}
-        {currentUserProfile && (
+        {currentUser && currentUserProfile && (
           <>
             <h2 className="text-3xl font-bold text-center my-8">My Profile</h2>
             <div className="border py-6 md:py-12 px-6 mb-8 md:px-12 flex flex-col md:flex-row items-center justify-between bg-white shadow-lg rounded-lg">

@@ -79,6 +79,32 @@
           "stackoverflow": "stackoverflow.com"
         }
       }
+    },
+    {
+      "name": "Aik Mint",
+      "email": "aikmint@gmail.com",
+      "password": "1111",
+      "confirm": "1111",
+      "img": "https://github.com/hafizabdullah1.png",
+      "git": "hafizabdullah1",
+      "id": 5,
+      "profile": {
+        "status": "Junior Developer",
+        "website": "https://hafizabdullah.site",
+        "location": "Lahore",
+        "company": "VisionX",
+        "skills": "Html, Css, Js, React, Nextjs, Typescript, NodeJs, ExpressJs, MongoDb, Python, Django, DRF",
+        "git": "hafizabdullah1",
+        "bio": "i am full stack developer",
+        "social": {
+          "twitter": "",
+          "facebook": "",
+          "linkedin": "",
+          "youtube": "",
+          "instagram": "",
+          "stackoverflow": ""
+        }
+      }
     }
   ],
   "devPosts": [
@@ -162,6 +188,24 @@
       "img": "https://github.com/hafizabdullah1.png",
       "Uid": 1,
       "id": 7
+    },
+    {
+      "comment": "hmm",
+      "date": "2025-07-14",
+      "time": "20:36:33",
+      "username": "Aik Mint",
+      "img": "https://github.com/hafizabdullah1.png",
+      "Uid": 5,
+      "id": 8
+    },
+    {
+      "comment": "gd ho gya ",
+      "date": "2025-07-14",
+      "time": "20:36:33",
+      "username": "Aik Mint",
+      "img": "https://github.com/hafizabdullah1.png",
+      "Uid": 5,
+      "id": 10
     }
   ],
   "postReplies": [

@@ -16,11 +16,15 @@ function App() {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const isPublicRoute = ['/', '/sign_in', '/sign_up'].includes(location.pathname);
+    // Public routes for everyone
+    const publicRoutes = ['/', '/sign_in', '/sign_up', '/developers_profile'];
+    // Also allow /profile/:id for everyone
+    const isProfileRoute = location.pathname.startsWith('/profile/');
+    const isPublicRoute = publicRoutes.includes(location.pathname) || isProfileRoute;
     
     if (!user && !isPublicRoute) {
       navigate('/');
-    } else if (user && isPublicRoute) {
+    } else if (user && (location.pathname === '/' || location.pathname === '/sign_in' || location.pathname === '/sign_up')) {
       if (user.profile) {
         navigate(`/profile/${user.id}`);
       } else {
