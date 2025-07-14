@@ -16,7 +16,7 @@ A modern React-based social platform for developers to connect, share posts, and
 
 - **Frontend**: React 18.2.0
 - **State Management**: Redux with Redux Thunk
-- **Routing**: React Router DOM 6.18.0
+- **Routing**: React Router DOM 5
 - **HTTP Client**: Axios
 - **Styling**: Tailwind CSS
 - **Icons**: Font Awesome
@@ -35,7 +35,7 @@ Before running this project, make sure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone [<repository-url>](https://github.com/hafizabdullah1/dev-connections)
 cd dev-connections
 ```
 
