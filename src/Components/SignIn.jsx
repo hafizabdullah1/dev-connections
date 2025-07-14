@@ -3,112 +3,184 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom';
 import { getData } from '../Actions/action'
 import Header from './Header';
+import useDocumentTitle from '../utils/useDocumentTitle';
 
 function SignIn() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { data } = useSelector((state) => state?.storeData)
+  const { data, loading, failed } = useSelector((state) => state?.storeData)
+  const [user, setUser] = useState({})
+  const [error, setError] = useState({})
+  useDocumentTitle('Sign In');
 
   useEffect(() => {
     dispatch(getData())
-  }, [])
+  }, [dispatch])
 
+  const [loginValue, setLoginValue] = useState({
+    loginEmail: '',
+    loginPassword: ''
+  })
 
-  const [loginValue, setLoginValue] = useState({})
+  const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { loginEmail, loginPassword } = loginValue
 
   const handleLoginValue = (e) => {
-    setLoginValue({ ...loginValue, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    setLoginValue({ ...loginValue, [name]: value })
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: '' })
+    }
   }
 
+  const validateForm = () => {
+    const newErrors = {}
 
-  const [error, setError] = useState()
-  const errors = {}
-  const handleValidation = () => {
-
-    const checkUser = data?.some((ele) => ele.email === loginEmail && ele.password === loginPassword)
-
-    if (!loginEmail) {
-      errors.email = "email is required"
+    if (!loginEmail.trim()) {
+      newErrors.loginEmail = "Email is required"
+    } else if (!/\S+@\S+\.\S+/.test(loginEmail)) {
+      newErrors.loginEmail = "Please enter a valid email"
     }
+
     if (!loginPassword) {
-      errors.password = "password is required"
+      newErrors.loginPassword = "Password is required"
+    } else if (loginPassword.length < 4) {
+      newErrors.loginPassword = "Password must be at least 4 characters"
     }
-    if (loginPassword && checkUser === false) {
-      errors.password = "incorrect password or email"
-    }
-    setError(errors)
 
-    if (Object.keys(errors).length === 0) {
-      return true
-    }
-    else {
-      return false
-    }
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
 
-  const handleCheck = () => {
-    const isValid = handleValidation()
+  const handleCheck = async () => {
+    if (!validateForm()) return
 
-    if (isValid) {
-      const userObj = data?.find((user) => user.email === loginEmail)
+    setIsSubmitting(true)
+
+    try {
+      const userObj = data?.find((user) => 
+        user.email === loginEmail && user.password === loginPassword
+      )
+
       if (userObj) {
         localStorage.setItem('user', JSON.stringify(userObj))
-
+        
         if (userObj.profile) {
           navigate(`/profile/${userObj.id}`)
-        }
-        else {
+        } else {
           navigate('/welcome')
         }
+      } else {
+        setErrors({ 
+          loginPassword: "Incorrect email or password" 
+        })
       }
-      else {
-        document.getElementById('server_error').style.display = 'flex'
-        document.getElementById('sign_in').style.display = 'none'
-      }
+    } catch (error) {
+      setErrors({ 
+        loginPassword: "An error occurred. Please try again." 
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleCheck()
+    }
+  }
 
   return (
     <>
       <Header />
 
-      <div id='server_error' className='hidden min-h-screen py-32  flex-grow items-start justify-center bg-gray-50'>
-        <div className='rounded-lg bg-white p-8 text-center shadow-xl'>
-          <h1 className='mb-4 text-4xl font-bold'>404</h1>
-          <p className='text-gray-600'>Server Not Start</p>
-          <p className='text-red-600'>Oops! Something Went Wrong Contact With The Site Owner</p>
+      {failed && (
+        <div className='min-h-screen py-32 flex items-center justify-center bg-gray-50'>
+          <div className='rounded-lg bg-white p-8 text-center shadow-xl'>
+            <h1 className='mb-4 text-4xl font-bold text-red-500'>Server Error</h1>
+            <p className='text-gray-600 mb-2'>Unable to connect to server</p>
+            <p className='text-red-600'>Please check your connection and try again</p>
+            <button 
+              onClick={() => window.location.reload()}
+              className='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+            >
+              Retry
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div id='sign_in' className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-4 text-center">Sign In</h1>
-        <h2 className="text-xl sm:text-2xl mb-6 text-center"><i className="fas fa-user"></i> Sign Into Your Account</h2>
-        <div className="w-full max-w-md p-4 bg-white rounded-lg shadow-md">
-          <div className='relative mt-2'>
-            <input
-              name='loginEmail'
-              value={loginEmail}
-              onChange={handleLoginValue}
-              className="border-b mb-4 px-4 py-3 rounded-lg w-full text-gray-700" type="text" placeholder="Email Address" />
-            {error && <span className='left-0 truncate italic text-red-500 text-xs absolute bottom-0'>{error.email}</span>}
+      {!failed && (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 py-8">
+          <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+            <h1 className="text-3xl font-bold text-center mb-2">Sign In</h1>
+            <h2 className="text-lg text-gray-600 text-center mb-6">
+              <i className="fas fa-user mr-2"></i> 
+              Sign Into Your Account
+            </h2>
+            
+            <div className='space-y-4'>
+              <div className='relative'>
+                <input
+                  name='loginEmail'
+                  value={loginEmail}
+                  onChange={handleLoginValue}
+                  onKeyPress={handleKeyPress}
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.loginEmail ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  type="email" 
+                  placeholder="Email Address"
+                  disabled={isSubmitting}
+                />
+                {errors.loginEmail && (
+                  <span className='text-red-500 text-sm mt-1 block'>
+                    {errors.loginEmail}
+                  </span>
+                )}
+              </div>
+              
+              <div className='relative'>
+                <input
+                  name='loginPassword'
+                  value={loginPassword}
+                  onChange={handleLoginValue}
+                  onKeyPress={handleKeyPress}
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.loginPassword ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  type="password" 
+                  placeholder="Password"
+                  disabled={isSubmitting}
+                />
+                {errors.loginPassword && (
+                  <span className='text-red-500 text-sm mt-1 block'>
+                    {errors.loginPassword}
+                  </span>
+                )}
+              </div>
+              
+              <button
+                onClick={handleCheck}
+                disabled={isSubmitting || loading}
+                className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
+              >
+                {isSubmitting ? 'Signing In...' : 'Sign In'}
+              </button>
+            </div>
+            
+            <p className="mt-6 text-center text-gray-600">
+              Don't have an account?{' '}
+              <Link to="/sign_up" className="text-blue-600 hover:text-blue-700 font-medium">
+                Sign Up
+              </Link>
+            </p>
           </div>
-          <div className='relative mb-2'>
-            <input
-              name='loginPassword'
-              value={loginPassword}
-              onChange={handleLoginValue}
-              className="border-b mb-4 px-4 py-3 rounded-lg w-full text-gray-700" type="password" placeholder="Password" />
-            {error && <span className='left-0 truncate italic text-red-500 text-xs absolute bottom-0'>{error.password}</span>}
-          </div>
-          <button
-            onClick={handleCheck}
-            className="bg-[#CF901A] text-white px-4 py-3 rounded-lg w-full hover:bg-yellow-600">Login</button>
-          <p className="mt-4 text-center">Don't Have an Account? <Link to="/sign_up" className="text-[#CF901A] hover:text-yellow-600">Sign Up</Link></p>
         </div>
-      </div>
+      )}
     </>
   );
 }

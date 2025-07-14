@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import MainPage from './Components/MainPage'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Developers from './Components/Developers'
 import SignIn from './Components/SignIn'
 import SignUp from './Components/SignUp'
@@ -9,21 +9,25 @@ import CreateProfile from './Components/CreateProfile'
 import Profile from './Components/Profile'
 import EditProfile from './Components/EditProfile'
 import Post from './Components/Post'
-import Discussion from './Components/Discussion'
 
 function App() {
-
-
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
+    const isPublicRoute = ['/', '/sign_in', '/sign_up'].includes(location.pathname);
+    
+    if (!user && !isPublicRoute) {
       navigate('/');
-    } else {
-      navigate(`/profile/${user.id}`);
+    } else if (user && isPublicRoute) {
+      if (user.profile) {
+        navigate(`/profile/${user.id}`);
+      } else {
+        navigate('/welcome');
+      }
     }
-  }, []);
+  }, [navigate, location.pathname]);
 
   return (
     <>
@@ -37,7 +41,6 @@ function App() {
         <Route path='/profile/:id' element={<Profile />} />
         <Route path='/edit_profile' element={<EditProfile />} />
         <Route path='/post' element={<Post />} />
-        <Route path="/discussion/:postId" element={<Discussion />} />
       </Routes>
     </>
   )

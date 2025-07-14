@@ -53,13 +53,40 @@
         "gitUser": "hafizabdullah1",
         "bio": "i am senior mern stack developer"
       }
+    },
+    {
+      "name": "Test User",
+      "email": "test@gmail.com",
+      "password": "1111",
+      "confirm": "1111",
+      "img": "https://github.com/hafizabdullah1.png",
+      "git": "hafizabdullah1",
+      "id": 4,
+      "profile": {
+        "status": "Senior Developer",
+        "website": "hafizabdullah.vercel.app",
+        "location": "Lhr",
+        "company": "VisionX",
+        "skills": "Html,Css,JavaScript,J-query,React.js,Bootstrap,React-bootstrap,Tailwind,Materiul-ui,NodeJs,ExpressJs,MongoDB,Git,Github",
+        "git": "hafizabdullah1",
+        "bio": "Hello how are you",
+        "social": {
+          "twitter": "x.com/hafizabdullah",
+          "facebook": "https://facebook.com/hafizabdullah01",
+          "linkedin": "https://linkedin.com/in/hahfizabdullah1",
+          "youtube": "youtube.com",
+          "instagram": "https://instagram.com/hafiz_abdullah11",
+          "stackoverflow": "stackoverflow.com"
+        }
+      }
     }
   ],
   "devPosts": [
     {
       "comment": "hi",
       "like": [
-        2
+        2,
+        4
       ],
       "date": "2024-05-17",
       "time": "20:45:24",
@@ -77,10 +104,64 @@
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR14Q8v555WtVlPnDG4cHDfPkAEN4r87mBAxQ&s",
       "Uid": 2,
       "id": 2,
-      "like": [],
+      "like": [
+        4
+      ],
       "dislike": [
         2
       ]
+    },
+    {
+      "comment": "hello",
+      "date": "2025-07-07",
+      "time": "07:25:00",
+      "username": "Test User",
+      "img": "https://github.com/hafizabdullah1.png",
+      "Uid": 4,
+      "id": 3,
+      "like": [
+        4
+      ],
+      "dislike": []
+    },
+    {
+      "comment": "test",
+      "date": "2025-07-07",
+      "time": "11:40:15",
+      "username": "Test User",
+      "img": "https://github.com/hafizabdullah1.png",
+      "Uid": 4,
+      "id": 4,
+      "like": [
+        1
+      ]
+    },
+    {
+      "comment": "helllo g",
+      "date": "2025-07-14",
+      "time": "19:57:33",
+      "username": "John Doe",
+      "img": "https://via.placeholder.com/150",
+      "Uid": 1,
+      "id": 5
+    },
+    {
+      "comment": "hwo are you",
+      "date": "2025-07-14",
+      "time": "19:58:17",
+      "username": "John Doe",
+      "img": "https://via.placeholder.com/150",
+      "Uid": 1,
+      "id": 6
+    },
+    {
+      "comment": "check kr",
+      "date": "2025-07-14",
+      "time": "19:59:13",
+      "username": "developer",
+      "img": "https://github.com/hafizabdullah1.png",
+      "Uid": 1,
+      "id": 7
     }
   ],
   "postReplies": [
@@ -107,6 +188,49 @@
       "date": "2024-05-18",
       "time": "19:41:06",
       "id": 3
+    },
+    {
+      "postId": "1",
+      "username": "Test User",
+      "comment": "how are you",
+      "date": "2025-07-07",
+      "time": "06:57:39",
+      "id": 4
+    },
+    {
+      "postId": "1",
+      "username": "Test User",
+      "comment": "cdbh",
+      "date": "2025-07-07",
+      "time": "06:57:45",
+      "id": 5
+    },
+    {
+      "postId": 3,
+      "userId": 4,
+      "username": "Test User",
+      "img": "https://github.com/hafizabdullah1.png",
+      "text": "how are you",
+      "date": "2025-07-07T07:26:34.931Z",
+      "id": 6
+    },
+    {
+      "postId": 3,
+      "userId": 4,
+      "username": "Test User",
+      "img": "https://github.com/hafizabdullah1.png",
+      "text": "habibi",
+      "date": "2025-07-07T07:26:55.842Z",
+      "id": 7
+    },
+    {
+      "postId": 3,
+      "userId": 4,
+      "username": "Test User",
+      "img": "https://github.com/hafizabdullah1.png",
+      "text": "how are you",
+      "date": "2025-07-07T07:35:14.551Z",
+      "id": 8
     }
   ]
 }

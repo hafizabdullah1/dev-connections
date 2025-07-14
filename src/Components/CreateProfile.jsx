@@ -9,13 +9,40 @@ function CreateProfile() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [profile, setProfile] = useState({})
+    const [profile, setProfile] = useState({
+        status: '',
+        company: '',
+        website: '',
+        location: '',
+        skills: '',
+        git: '',
+        bio: '',
+        social: {
+            twitter: '',
+            facebook: '',
+            linkedin: '',
+            youtube: '',
+            instagram: '',
+            stackoverflow: ''
+        }
+    })
+    const [displaySocialInputs, setDisplaySocialInputs] = useState(false);
 
-    const {status, website , location, company , skills, git, bio} = profile
+    const {status, website , location, company , skills, git, bio, social} = profile
 
     const handleProfile=(e)=>{
         setProfile({ ...profile, [e.target.name] : e.target.value})
     }
+
+    const handleSocialChange = (e) => {
+        setProfile({
+            ...profile,
+            social: {
+                ...profile.social,
+                [e.target.name]: e.target.value
+            }
+        });
+    };
 
    const userInfo = JSON.parse(localStorage.getItem('user'))
 
@@ -24,10 +51,10 @@ function CreateProfile() {
     const handleValidation=()=>{
 
         if(!status){
-            errors.email = "status is required"
+            errors.status = "Status is required"
         }
         if(!skills){
-            errors.password = "skills is required"
+            errors.skills = "Skills are required"
         }
 
         setError(errors)
@@ -124,7 +151,7 @@ const handleSubmit=()=>{
             <input type="text"
             value={git}
              onChange={handleProfile}
-              name="gitUser"
+              name="git"
                placeholder='Github Username'
                className="border rounded p-2 w-full" />
             <label className="text-gray-500 text-sm mt-1">If you want your latest repos and a Github link, include your username</label>
@@ -139,9 +166,39 @@ const handleSubmit=()=>{
             <label className="text-gray-500 text-sm mt-1">Tell us a little about yourself</label>
         </div>
         <div className="mb-4">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2">Add Social Network Links</button>
+          <button onClick={() => setDisplaySocialInputs(!displaySocialInputs)} className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2">Add Social Network Links</button>
           <span className="text-gray-500 text-sm">Optional</span>
         </div>
+
+        {displaySocialInputs && (
+            <div>
+                <div className="flex items-center mb-4">
+                    <i className="fab fa-twitter text-2xl text-blue-400 mr-2"></i>
+                    <input type="text" placeholder="Twitter URL" name="twitter" value={social.twitter} onChange={handleSocialChange} className="border rounded p-2 w-full" />
+                </div>
+                <div className="flex items-center mb-4">
+                    <i className="fab fa-facebook text-2xl text-blue-600 mr-2"></i>
+                    <input type="text" placeholder="Facebook URL" name="facebook" value={social.facebook} onChange={handleSocialChange} className="border rounded p-2 w-full" />
+                </div>
+                <div className="flex items-center mb-4">
+                    <i className="fab fa-youtube text-2xl text-red-600 mr-2"></i>
+                    <input type="text" placeholder="YouTube URL" name="youtube" value={social.youtube} onChange={handleSocialChange} className="border rounded p-2 w-full" />
+                </div>
+                <div className="flex items-center mb-4">
+                    <i className="fab fa-linkedin text-2xl text-blue-700 mr-2"></i>
+                    <input type="text" placeholder="Linkedin URL" name="linkedin" value={social.linkedin} onChange={handleSocialChange} className="border rounded p-2 w-full" />
+                </div>
+                <div className="flex items-center mb-4">
+                    <i className="fab fa-instagram text-2xl text-pink-500 mr-2"></i>
+                    <input type="text" placeholder="Instagram URL" name="instagram" value={social.instagram} onChange={handleSocialChange} className="border rounded p-2 w-full" />
+                </div>
+                <div className="flex items-center mb-4">
+                    <i className="fab fa-stack-overflow text-2xl text-orange-500 mr-2"></i>
+                    <input type="text" placeholder="Stack Overflow URL" name="stackoverflow" value={social.stackoverflow} onChange={handleSocialChange} className="border rounded p-2 w-full" />
+                </div>
+            </div>
+        )}
+
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
           <button className="bg-blue-500 text-white px-4 py-2 rounded-full" 
             onClick={handleSubmit}

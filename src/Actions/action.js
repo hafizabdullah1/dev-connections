@@ -1,160 +1,162 @@
 import axios from 'axios'
 
+const baseUrl = process.env.NODE_ENV === 'production' 
+  ? "https://inventory-management-api-wvms.onrender.com" 
+  : "http://localhost:3005"
 
-const baseUrl = "https://inventory-management-api-wvms.onrender.com"
+// Create axios instance with default config
+const api = axios.create({
+  baseURL: baseUrl,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
 
-export const addUser = (addUser) => async (dispatch) => {
+// Add request interceptor for error handling
+api.interceptors.request.use(
+  (config) => config,
+  (error) => Promise.reject(error)
+)
 
-    try {
+// Add response interceptor for error handling
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('API Error:', error)
+    return Promise.reject(error)
+  }
+)
 
-        dispatch({ type: 'ADD_USER_REQUEST' })
-
-        const res = await axios.post(`${baseUrl}/devUsers`, addUser);
-
-        dispatch({ type: 'ADD_USER_SUCCESS', payload: res.data })
-
-    }
-    catch (error) {
-        dispatch({ type: 'ADD_USER_FAIL', payload: error.message })
-    }
+export const addUser = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: 'ADD_USER_REQUEST' })
+    
+    const response = await api.post('/devUsers', userData)
+    
+    dispatch({ type: 'ADD_USER_SUCCESS', payload: response.data })
+    return response.data
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to create user'
+    dispatch({ type: 'ADD_USER_FAIL', payload: errorMessage })
+    throw error
+  }
 }
 
 export const getData = () => async (dispatch) => {
-
-    try {
-        dispatch({ type: 'GET_DATA_REQUEST' })
-
-        const res = await axios.get(`${baseUrl}/devUsers`)
-
-        dispatch({ type: 'GET_DATA_SUCCESS', payload: res.data })
-    }
-    catch (error) {
-        dispatch({ type: 'GET_DATA_FAIL', payload: error.message })
-    }
+  try {
+    dispatch({ type: 'GET_DATA_REQUEST' })
+    
+    const response = await api.get('/devUsers')
+    
+    dispatch({ type: 'GET_DATA_SUCCESS', payload: response.data })
+    return response.data
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch users'
+    dispatch({ type: 'GET_DATA_FAIL', payload: errorMessage })
+    throw error
+  }
 }
 
-export const createProfile = (obj) => async (dispatch) => {
-
-    try {
-        dispatch({ type: 'CREATE_PROFILE_REQUEST' })
-
-        const res = await axios.put(`${baseUrl}/devUsers/${obj.id}`, obj)
-
-        dispatch({ type: 'CREATE_PROFILE_SUCCESS', payload: res.data })
-    }
-    catch (error) {
-        dispatch({ type: 'CREATE_PROFILE_FAIL', payload: error.message })
-    }
+export const createProfile = (profileData) => async (dispatch) => {
+  try {
+    dispatch({ type: 'CREATE_PROFILE_REQUEST' })
+    
+    const response = await api.put(`/devUsers/${profileData.id}`, profileData)
+    
+    dispatch({ type: 'CREATE_PROFILE_SUCCESS', payload: response.data })
+    return response.data
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to create profile'
+    dispatch({ type: 'CREATE_PROFILE_FAIL', payload: errorMessage })
+    throw error
+  }
 }
 
 export const getProfile = (id) => async (dispatch) => {
-
-    try {
-        dispatch({ type: 'GET_PROFILE_REQUEST' })
-
-        const res = await axios.get(`${baseUrl}/devUsers/${id}`)
-
-        dispatch({ type: 'GET_PROFILE_SUCCESS', payload: res.data })
-    }
-    catch (error) {
-        dispatch({ type: 'GET_PROFILE_FAIL', payload: error.message })
-    }
+  try {
+    dispatch({ type: 'GET_PROFILE_REQUEST' })
+    
+    const response = await api.get(`/devUsers/${id}`)
+    
+    dispatch({ type: 'GET_PROFILE_SUCCESS', payload: response.data })
+    return response.data
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch profile'
+    dispatch({ type: 'GET_PROFILE_FAIL', payload: errorMessage })
+    throw error
+  }
 }
 
-export const sendPost = (addPost) => async (dispatch) => {
-
-    try {
-
-        dispatch({ type: 'ADD_POST_REQUEST' })
-
-        const res = await axios.post(`${baseUrl}/devPosts`, addPost);
-
-        dispatch({ type: 'ADD_POST_SUCCESS', payload: res.data })
-
-    }
-    catch (error) {
-        dispatch({ type: 'ADD_POST_FAIL', payload: error.message })
-    }
+export const sendPost = (postData) => async (dispatch) => {
+  try {
+    dispatch({ type: 'ADD_POST_REQUEST' })
+    
+    const response = await api.post('/devPosts', postData)
+    
+    dispatch({ type: 'ADD_POST_SUCCESS', payload: response.data })
+    dispatch(getAllPost())
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to create post'
+    dispatch({ type: 'ADD_POST_FAIL', payload: errorMessage })
+    throw error
+  }
 }
 
 export const getAllPost = () => async (dispatch) => {
-    try {
-        dispatch({ type: 'GET_POST_REQUEST' })
-
-        const res = await axios.get(`${baseUrl}/devPosts`)
-
-        dispatch({ type: 'GET_POST_SUCCESS', payload: res.data })
-    }
-    catch (error) {
-        dispatch({ type: 'GET_POST_FAIL', payload: error.message })
-    }
+  try {
+    dispatch({ type: 'GET_POST_REQUEST' })
+    
+    const response = await api.get('/devPosts')
+    
+    dispatch({ type: 'GET_POST_SUCCESS', payload: response.data })
+    return response.data
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch posts'
+    dispatch({ type: 'GET_POST_FAIL', payload: errorMessage })
+    throw error
+  }
 }
 
 export const delPost = (id) => async (dispatch) => {
-    try {
-        dispatch({ type: 'DEL_POST_REQUEST' })
-
-        const res = await axios.delete(`${baseUrl}/devPosts/${id}`)
-
-        dispatch({ type: 'DEL_POST_SUCCESS', payload: res.data })
-    }
-    catch (error) {
-        dispatch({ type: 'DEL_POST_FAIL', payload: error.message })
-    }
+  try {
+    dispatch({ type: 'DEL_POST_REQUEST' })
+    
+    await api.delete(`/devPosts/${id}`)
+    
+    dispatch({ type: 'DEL_POST_SUCCESS', payload: id })
+    dispatch(getAllPost())
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to delete post'
+    dispatch({ type: 'DEL_POST_FAIL', payload: errorMessage })
+    throw error
+  }
 }
 
-export const likePost = (obj) => async (dispatch) => {
-
-    try {
-        dispatch({ type: 'LIKE_POST_REQUEST' })
-
-        const res = await axios.put(`${baseUrl}/devPosts/${obj.id}`, obj)
-
-
-        dispatch({ type: 'LIKE_POST_SUCCESS', payload: res.data })
-    }
-    catch (error) {
-        dispatch({ type: 'LIKE_POST_FAIL', payload: error.message })
-    }
+export const likePost = (postData) => async (dispatch) => {
+  try {
+    dispatch({ type: 'LIKE_POST_REQUEST' })
+    
+    const response = await api.put(`/devPosts/${postData.id}`, postData)
+    
+    dispatch({ type: 'LIKE_POST_SUCCESS', payload: response.data })
+    dispatch(getAllPost())
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to update post'
+    dispatch({ type: 'LIKE_POST_FAIL', payload: errorMessage })
+    throw error
+  }
 }
-
-
-
-
-/**
-|--------------------------------------------------
-| chat gpt actions
-|--------------------------------------------------
-*/
-
-// Actions/action.js
 
 export const getPostById = (postId) => async (dispatch) => {
-    try {
-        const { data } = await axios.get(`${baseUrl}/devPosts/${postId}`);
-
-        dispatch({ type: 'GET_POST_BY_ID_SUCCESS', payload: data });
-    } catch (error) {
-        dispatch({ type: 'GET_POST_BY_ID_FAILURE', error });
-    }
-};
-
-export const getReplies = (postId) => async (dispatch) => {
-    try {
-        const { data } = await axios.get(`${baseUrl}/postReplies?postId=${postId}`);
-
-        dispatch({ type: 'GET_REPLIES_SUCCESS', payload: { postId, replies: data } });
-    } catch (error) {
-        dispatch({ type: 'GET_REPLIES_FAILURE', error });
-    }
-};
-
-export const addReply = (reply) => async (dispatch) => {
-    try {
-        const { data } = await axios.post(`${baseUrl}/postReplies`, reply)
-
-        dispatch({ type: 'ADD_REPLY_SUCCESS', payload: data });
-    } catch (error) {
-        dispatch({ type: 'ADD_REPLY_FAILURE', error });
-    }
-};
+  try {
+    const response = await api.get(`/devPosts/${postId}`)
+    
+    dispatch({ type: 'GET_POST_BY_ID_SUCCESS', payload: response.data })
+    return response.data
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch post'
+    dispatch({ type: 'GET_POST_BY_ID_FAILURE', payload: errorMessage })
+    throw error
+  }
+}
