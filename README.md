@@ -35,7 +35,7 @@ Before running this project, make sure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone [<repository-url>](https://github.com/hafizabdullah1/dev-connections)
+git clone [Repository Rrl](https://github.com/hafizabdullah1/dev-connections)
 cd dev-connections
 ```
 
